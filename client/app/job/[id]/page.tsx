@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { jobs } from "@/lib/fake-data";
 
 interface JobItemInterface {
