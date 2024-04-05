@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { jobs } from "@/lib/fake-data";
+import { getJob } from "@/lib/graphql/queries";
 
 interface JobItemInterface {
   id: string;
@@ -13,10 +14,8 @@ interface JobItemInterface {
   description: string;
 }
 
-export default function JobPage({ params }: { params: any }) {
-  const { id } = params;
-
-  const job: JobItemInterface | undefined = jobs.find((job) => job.id === id);
+export default async function JobPage({ params }: { params: any }) {
+  const job = await getJob(params.id);
 
   return (
     <div>
