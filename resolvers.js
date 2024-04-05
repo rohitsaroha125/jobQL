@@ -1,12 +1,7 @@
+import { getJobs } from "./controllers/jobControllers.js";
+
 export const resolvers = {
   Query: {
-    job: () => {
-      return [
-        {
-          title: "New Job",
-          description: "New Description",
-        },
-      ];
-    },
+    job: getJobs,
   },
 };
