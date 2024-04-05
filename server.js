@@ -1,23 +1,13 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
+import express from "express";
 
-const typeDefs = `#graphql
+const PORT = 5000;
 
-type Query{
-    greetings: String
-}
-`;
+const app = express();
 
-const resolvers = {
-  Query: {
-    greetings: () => "Hello World",
-  },
-};
+app.use(express.json());
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
 });
-
-const { url } = await startStandaloneServer(server, { listen: { port: 5000 } });
-console.log(`🚀 Server ready at ${url}`);
