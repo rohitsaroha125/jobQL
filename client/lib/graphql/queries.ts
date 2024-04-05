@@ -43,3 +43,20 @@ export async function getJob(id: any) {
   const { job } = (await client.request(query, { id: Number(id) })) as any;
   return job;
 }
+
+export async function getCompany(id: any) {
+  const query = gql`
+    query CompanyById($id: Int!) {
+      company(id: $id) {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+    }
+  `;
+
+  const { company } = (await client.request(query, { id: Number(id) })) as any;
+  return company;
+}

@@ -1,4 +1,5 @@
 import { companies } from "@/lib/fake-data";
+import { getCompany } from "@/lib/graphql/queries";
 
 interface CompanyInterface {
   company: {
@@ -7,10 +8,8 @@ interface CompanyInterface {
   };
 }
 
-export default function Company({ params }: { params: any }) {
-  const { id } = params;
-
-  const company = companies.find((company) => company.id === id);
+export default async function Company({ params }: { params: any }) {
+  const company = await getCompany(params.id);
 
   return (
     <div>
