@@ -10,7 +10,7 @@ export default async function Home() {
     JSON.stringify({
       query: `
       query{
-        job {
+        jobs {
           id
           title
           description
@@ -31,12 +31,10 @@ export default async function Home() {
     }
   );
 
-  console.log("data is ", data.data);
-
   return (
     <div>
       <h1 className="title">Job Board</h1>
-      <JobList jobs={data.data.job} />
+      <JobList jobs={data.data.jobs} />
     </div>
   );
 }
