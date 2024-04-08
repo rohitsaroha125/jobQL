@@ -65,3 +65,19 @@ export async function getCompany(id: any) {
   const { company } = (await client.request(query, { id: Number(id) })) as any;
   return company;
 }
+
+export async function createCompany(title: string, description: string) {
+  const mutation = gql`
+    mutation CreateJob($title: String!, $description: String!) {
+      createJob(title: $title, description: $description) {
+        id
+        title
+        description
+        createdAt
+      }
+    }
+  `;
+
+  const createCompany = await client.request(mutation, { title, description });
+  return createCompany;
+}

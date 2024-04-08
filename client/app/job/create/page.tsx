@@ -1,6 +1,25 @@
-
+"use client";
+import { useRef } from "react";
+import { createCompany } from "@/lib/graphql/queries";
+import { useRouter } from "next/navigation";
 
 export default function CreateJob() {
+  const titleRef = useRef<any>();
+  const descRef = useRef<any>();
+  const router = useRouter();
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const title = titleRef.current.value;
+    const description = descRef.current.value;
+
+    const data: any = await createCompany(title, description);
+
+    if (data.createJob) {
+      router.push("/");
+    }
+  };
+
   return (
     <div>
       <h1 className="title">New Job</h1>
@@ -9,31 +28,18 @@ export default function CreateJob() {
           <div className="field">
             <label className="label">Title</label>
             <div className="control">
-              <input
-                className="input"
-                type="text"
-                // value={title}
-                // onChange={(event) => setTitle(event.target.value)}
-              />
+              <input className="input" type="text" ref={titleRef} />
             </div>
           </div>
           <div className="field">
             <label className="label">Description</label>
             <div className="control">
-              <textarea
-                className="textarea"
-                rows={10}
-                // value={description}
-                // onChange={(event) => setDescription(event.target.value)}
-              />
+              <textarea className="textarea" rows={10} ref={descRef} />
             </div>
           </div>
           <div className="field">
             <div className="control">
-              <button
-                className="button is-link"
-                //   onClick={handleSubmit}
-              >
+              <button className="button is-link" onClick={handleSubmit}>
                 Submit
               </button>
             </div>
