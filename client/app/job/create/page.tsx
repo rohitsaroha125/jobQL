@@ -12,7 +12,11 @@ export default function CreateJob() {
     const title = titleRef.current.value;
     const description = descRef.current.value;
 
-    const data: any = await createCompany(title, description);
+    const data: any = await createCompany(
+      title,
+      description,
+      localStorage.getItem("token")
+    );
 
     if (data.createJob) {
       await noCachePage();

@@ -66,7 +66,11 @@ export async function getCompany(id: any) {
   return company;
 }
 
-export async function createCompany(title: string, description: string) {
+export async function createCompany(
+  title: string,
+  description: string,
+  token: any
+) {
   const mutation = gql`
     mutation CreateJob($title: String!, $description: String!) {
       createJob(title: $title, description: $description) {
@@ -78,7 +82,13 @@ export async function createCompany(title: string, description: string) {
     }
   `;
 
-  const createCompany = await client.request(mutation, { title, description });
+  const createCompany = await client.request(
+    mutation,
+    { title, description },
+    {
+      authorization: `Bearer ${token}`,
+    }
+  );
   return createCompany;
 }
 
