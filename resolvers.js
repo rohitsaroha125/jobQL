@@ -13,7 +13,8 @@ import { GraphQLError } from "graphql";
 export const resolvers = {
   Query: {
     jobs: () => getJobs(),
-    job: async (_root, args) => {
+    job: async (_root, args, context) => {
+      console.log("Context is ", context);
       return await getJob(args.id);
     },
     company: async (__root, { id }) => {
@@ -28,7 +29,12 @@ export const resolvers = {
   },
 
   Mutation: {
-    createJob: (__root, { title, description }) => {
+    createJob: (__root, { title, description }, context) => {
+      if (!context.userId) {
+        throw new GraphQLError("You are not authorized", {
+          extensions: { code: "UNAUTHORIZED" },
+        });
+      }
       return createJob(title, description);
     },
     deleteJob: (__root, { id }) => {
