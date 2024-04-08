@@ -1,15 +1,35 @@
-import { getJobs, getJob } from "./controllers/jobControllers.js";
-import { getCompany } from "./controllers/companyController.js";
+import { getJobs, getJob, createJob } from "./controllers/jobControllers.js";
+import {
+  getCompany,
+  getJobsByCompany,
+} from "./controllers/companyController.js";
+import { GraphQLError } from "graphql";
 
 export const resolvers = {
   Query: {
     jobs: () => getJobs(),
-    job: (_root, args) => {
-      return getJob(args.id);
+    job: async (_root, args) => {
+      return await getJob(args.id);
     },
-    company: (__root, { id }) => {
-      return getCompany(id);
+    company: async (__root, { id }) => {
+      const company = await getCompany(id);
+      if (!company) {
+        throw new GraphQLError("No Company found with this id", {
+          extensions: { code: "NOT_FOUND" },
+        });
+      }
+      return company;
     },
+  },
+
+  Mutation: {
+    createJob: (__root, { title, description }) => {
+      return createJob(title, description);
+    },
+  },
+
+  Company: {
+    jobs: (company) => getJobsByCompany(company.id),
   },
 
   //   Job: {

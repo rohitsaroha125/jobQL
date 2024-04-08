@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
 import "bulma/css/bulma.css";
 
@@ -18,6 +19,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <header>
+          <nav>
+            <ul>
+              <li>
+                <Link href="/job/create">Create Job</Link>
+              </li>
+            </ul>
+          </nav>
+        </header>
         <main className="section">{children}</main>
       </body>
     </html>

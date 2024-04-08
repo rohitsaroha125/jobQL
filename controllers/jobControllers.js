@@ -22,3 +22,14 @@ export async function getJob(id) {
   });
   return job;
 }
+
+export async function createJob(title, description) {
+  const jobCreated = await prisma.job.create({
+    data: {
+      companyId: 2,
+      title,
+      description,
+    },
+  });
+  return jobCreated;
+}

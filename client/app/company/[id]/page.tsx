@@ -17,6 +17,7 @@ export default async function Company({ params }: { params: any }) {
         <>
           <h1 className="title">{company.name}</h1>
           <div className="box">{company.description}</div>
+          <h6>Jobs Posted by Company: {company.jobs.length} </h6>
         </>
       )}
     </div>

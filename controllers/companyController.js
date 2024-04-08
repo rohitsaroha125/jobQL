@@ -8,3 +8,12 @@ export async function getCompany(id) {
   });
   return company;
 }
+
+export async function getJobsByCompany(id) {
+  const jobs = await prisma.job.findMany({
+    where: {
+      companyId: id,
+    },
+  });
+  return jobs;
+}
