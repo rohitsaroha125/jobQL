@@ -4,8 +4,9 @@ type Query {
   company(id: Int!): Company
 }
 
-type Mutation{
+type Mutation {
   createJob(title: String!, description: String!): Job
+  deleteJob(id: Int!): DeleteCount
 }
 
 type Company {
@@ -24,4 +25,8 @@ type Job {
   createdAt: String
   company: Company!
   updatedAt: String
+}
+
+type DeleteCount {
+  count: Int!
 }

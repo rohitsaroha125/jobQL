@@ -1,12 +1,11 @@
 "use client";
 import { useRef } from "react";
 import { createCompany } from "@/lib/graphql/queries";
-import { useRouter } from "next/navigation";
+import { noCachePage } from "@/lib/actions";
 
 export default function CreateJob() {
   const titleRef = useRef<any>();
   const descRef = useRef<any>();
-  const router = useRouter();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -16,7 +15,8 @@ export default function CreateJob() {
     const data: any = await createCompany(title, description);
 
     if (data.createJob) {
-      router.push("/");
+      await noCachePage();
+      return;
     }
   };
 

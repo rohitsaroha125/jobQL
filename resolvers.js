@@ -1,4 +1,9 @@
-import { getJobs, getJob, createJob } from "./controllers/jobControllers.js";
+import {
+  getJobs,
+  getJob,
+  createJob,
+  deleteJob,
+} from "./controllers/jobControllers.js";
 import {
   getCompany,
   getJobsByCompany,
@@ -25,6 +30,9 @@ export const resolvers = {
   Mutation: {
     createJob: (__root, { title, description }) => {
       return createJob(title, description);
+    },
+    deleteJob: (__root, { id }) => {
+      return deleteJob(id);
     },
   },
 

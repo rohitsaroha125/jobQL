@@ -81,3 +81,18 @@ export async function createCompany(title: string, description: string) {
   const createCompany = await client.request(mutation, { title, description });
   return createCompany;
 }
+
+export async function deleteJob(id: any) {
+  const deleteMutation = gql`
+    mutation Mutation($deleteJobId: Int!) {
+      deleteJob(id: $deleteJobId) {
+        count
+      }
+    }
+  `;
+
+  const deleteCount = await client.request(deleteMutation, {
+    deleteJobId: Number(id),
+  });
+  return deleteCount;
+}
