@@ -23,7 +23,8 @@ export default function RootLayout({
           <nav>
             <ul>
               <li>
-                <Link href="/job/create">Create Job</Link>
+                <Link href="/job/create">Create Job</Link>&nbsp;&nbsp;&nbsp;&nbsp;
+                <Link href="/login">Login</Link>
               </li>
             </ul>
           </nav>

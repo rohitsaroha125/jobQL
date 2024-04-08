@@ -1,30 +1,59 @@
+"use client";
 import Link from "next/link";
+import { useRef } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { noCachePage } from "@/lib/actions";
 
 export default function LoginPage() {
+  const emailRef = useRef<any>();
+  const passwordRef = useRef<any>();
+  const router = useRouter();
+
+  async function loginFunction(e: any) {
+    e.preventDefault();
+    try {
+      const user = {
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      };
+
+      const { data } = await axios.post("http://localhost:5000/login", user, {
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+
+      if (data) {
+        localStorage.setItem("token", data.data.token);
+        localStorage.setItem("user", data.data.user);
+        await noCachePage();
+        return;
+      } else {
+        throw new Error("Error occured on login");
+      }
+    } catch (err) {
+      console.log("Error is ", err);
+    }
+  }
+
   return (
-    <nav className="navbar">
-      <div className="navbar-start">
-        <Link className="navbar-item" href="/">
-          Home
-        </Link>
-      </div>
-      {/* {loggedIn ? (
-        <div className="navbar-end">
-          <span className="navbar-item has-text-grey">{user.email}</span>
-          <Link className="navbar-item" to="/jobs/new">
-            Post Job
-          </Link>
-          <a className="navbar-item" onClick={handleLogout}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div className="navbar-end">
-          <Link className="navbar-item" to="/login">
-            Login
-          </Link>
-        </div>
-      )} */}
-    </nav>
+    <div>
+      <form onSubmit={loginFunction}>
+        <input
+          type="email"
+          name="email"
+          ref={emailRef}
+          placeholder="Please Enter your email"
+        />
+        <input
+          type="password"
+          name="password"
+          ref={passwordRef}
+          placeholder="Please Enter your password"
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   );
 }
